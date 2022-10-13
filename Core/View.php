@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class View
+abstract class View
 {
     public function __construct()
     {

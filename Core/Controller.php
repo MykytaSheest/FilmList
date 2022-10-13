@@ -2,9 +2,12 @@
 
 namespace Core;
 
-class Controller
+abstract class Controller
 {
-    public function __construct()
+    protected array $route;
+
+    public function __construct(array $route)
     {
+        $this->route = $route;
     }
 }
