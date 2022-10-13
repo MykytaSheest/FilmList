@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use lib\Codes;
 use lib\Messages;
 
 class View
@@ -30,10 +31,10 @@ class View
             if (file_exists(self::PATH_TO_LAYOUTS . $this->layout . '.php')) {
                 require self::PATH_TO_LAYOUTS . $this->layout . '.php';
             } else {
-                echo Messages::LAYOUT_NOT_FOUND;
+                View::error(Codes::HTTP_NOT_FOUND, Messages::LAYOUT_NOT_FOUND);
             }
         } else {
-            echo Messages::VIEW_NOT_FOUND;
+            View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
         }
     }
 
