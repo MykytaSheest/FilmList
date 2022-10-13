@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use lib\Codes;
 use lib\Messages;
 
 class Router
@@ -48,13 +49,13 @@ class Router
                     $controller = new $currentControllerPath($this->params);
                     $controller->$param();
                     } else {
-                    echo Messages::ACTION_NOT_FOUND;
+                    View::error(Codes::HTTP_INTERNAL_SERVER_ERROR, Messages::VIEW_NOT_FOUND);
                 }
             } else {
-                echo Messages::CONTROLLER_NOT_FOUND;
+                View::error(Codes::HTTP_INTERNAL_SERVER_ERROR, Messages::CONTROLLER_NOT_FOUND);
             }
         } else {
-            echo Messages::ROUTE_NOT_FOUND;
+            View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
         }
     }
 }
