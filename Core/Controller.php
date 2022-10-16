@@ -7,6 +7,7 @@ use Core\View;
 abstract class Controller
 {
     protected array $route;
+    protected Model $model;
     public View $view;
 
     public function __construct(array $route)
