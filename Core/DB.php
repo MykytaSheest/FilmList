@@ -23,7 +23,7 @@ class DB
         $stmt = $this->db->prepare($sql);
         if (!empty($params)) {
             foreach ($params as $key => $val) {
-                $stmt->bindParam(':' . $key, $val);
+                $stmt->bindValue(':' . $key, $val);
             }
         }
         $stmt->execute();

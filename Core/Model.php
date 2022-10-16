@@ -33,12 +33,9 @@ abstract class Model
         return lcfirst(str_replace('_', '', ucwords($source, '_')));
     }
 
-    /**
-     * @return static[]
-     */
     public function findAll()
     {
-        return $this->db->row('SELECT * FROM' . $this->getTableName() . ';');
+        return $this->db->row('SELECT * FROM ' . $this->getTableName() . ';');
     }
 
     abstract protected function getTableName(): string;
