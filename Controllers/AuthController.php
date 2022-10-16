@@ -4,25 +4,25 @@ namespace Controllers;
 
 use Core\Controller;
 use Core\View;
-use http\Client\Response;
 use lib\Codes;
 use lib\Messages;
 use Models\User;
-use Services\AuthService;
 
 class AuthController extends Controller
 {
-    private AuthService $authService;
 
     public function __construct(array $route)
     {
         parent::__construct($route);
         $this->model = new User();
-        $this->authService = new AuthService();
     }
 
     public function login(): void
     {
+        if ($this->authService->checkAuth()) {
+            $this->view->redirect('/');
+        }
+        $this->existenceUser('register');
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 $this->view->render('login');
@@ -30,6 +30,8 @@ class AuthController extends Controller
             case 'POST':
                 $user = $this->authService->loginUser($_POST['email'], $_POST['password']);
                 if ($user) {
+                    $_SESSION['id'] = $user->getId();
+                    $_SESSION['token'] = $user->token;
                     $data = [
                         "id" => $user->getId(),
                         "token" => $user->token,
@@ -47,6 +49,9 @@ class AuthController extends Controller
 
     public function register(): void
     {
+        if ($this->authService->checkAuth()) {
+            $this->view->redirect('/');
+        }
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 $this->view->render('register');
@@ -58,5 +63,11 @@ class AuthController extends Controller
             default:
                 View::error(Codes::HTTP_METHOD_NOT_ALLOWED, Messages::METHOD_NOT_ALLOWED);
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        $this->view->redirect('/');
     }
 }

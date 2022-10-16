@@ -12,9 +12,9 @@ trait CryptService
 
     }
 
-    public function checkCrypt(string $requestPassword, string $cryptPassword): bool
+    public function checkCrypt(string $requestValue, string $cryptValue): bool
     {
-        if (hash_equals($cryptPassword, crypt($requestPassword, $cryptPassword))) {
+        if (hash_equals($cryptValue, crypt($requestValue, $cryptValue))) {
             return true;
         }
         return false;
