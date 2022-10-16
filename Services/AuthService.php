@@ -16,8 +16,11 @@ class AuthService
         $this->user =  new User();
     }
 
-    public function createUser(string $email, string $password): User
+    public function createUser(string $email, string $password): mixed
     {
+        if ($this->user->getUserBy('email', $email)) {
+            return $this->user->getUserBy('email', $email);
+        }
         $this->user->email = $email;
         $this->user->password = $this->crypt($password);
         $this->user->create();
