@@ -38,7 +38,7 @@ class View
         }
     }
 
-    public static function error(int $code, string$message): void
+    public static function error(int $code, string $message): void
     {
         http_response_code($code);
         require self::PATH_TO_LAYOUTS . self::$errorLayout . '.php';

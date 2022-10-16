@@ -3,6 +3,9 @@
 namespace Models;
 
 use Core\Model;
+use Core\View;
+use lib\Codes;
+use lib\Messages;
 
 class User extends Model
 {
@@ -22,5 +25,19 @@ class User extends Model
             ]
         );
         return $user;
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE email = :email';
+        $data = $this->db->row($sql, ['email' => $email]);
+        if (!empty($data)) {
+            $user = new User();
+            $user->id = $data[0]['id'];
+            $user->email = $data[0]['email'];
+            $user->password = $data[0]['password'];
+            return $user;
+        }
+        return null;
     }
 }

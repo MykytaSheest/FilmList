@@ -6,28 +6,33 @@ use Models\User;
 
 class AuthService
 {
-    private string $salt = "5uTqJmjDZJ1GftMeTe2N";
+    use CryptService;
+
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user =  new User();
+    }
 
     public function createUser(string $email, string $password): User
     {
-        $user = new User();
-        $user->email = $email;
-        $user->password = $this->cryptPassword($password);
-        $user->create();
-        return $user;
+        $this->user->email = $email;
+        $this->user->password = $this->crypt($password);
+        $this->user->create();
+        return $this->user;
     }
 
-    private function cryptPassword(string $password): string
+    public function loginUser(string $email, string $password)
     {
-        return crypt($password, $this->salt);
-
-    }
-
-    private function checkPassword(string $requestPassword, string $cryptPassword): mixed
-    {
-        if (hash_equals($cryptPassword, crypt($requestPassword, $cryptPassword))) {
-            return true;
+        $user = $this->user->getUserByEmail($email);
+        if (isset($user)) {
+            if ($this->checkCrypt($password, $user->password)) {
+                $user->token = $this->crypt($email);
+                return $user;
+            }
+            return null;
         }
-        return false;
+        return null;
     }
 }
