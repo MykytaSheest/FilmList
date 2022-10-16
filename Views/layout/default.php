@@ -7,13 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> <?php echo $title ?></title>
     <script src="../../public/js/auth_headers.js"></script>
+    <link rel="stylesheet" href="../../public/css/main.css">
+    <link rel="stylesheet" href="../../public/css/auth.css">
 </head>
 <body>
     <header>
         <div>
-            <a href="logout">Logout</a>
+            <h1>Film List</h1>
         </div>
     </header>
-    <?php echo $content ?>
+    <div class="logout">
+        <?php if (!empty($_SESSION['token'])): ?>
+            <a href="logout">
+                <button>Logout</button>
+            </a>
+        <?php endif; ?>
+
+    </div>
+    <main class="main-content">
+        <?php echo $content ?>
+    </main>
 </body>
 </html>
