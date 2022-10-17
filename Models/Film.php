@@ -45,4 +45,17 @@ class Film extends Model
         );
         return $pivot;
     }
+
+    public function getFilms():array
+    {
+        $films = $this->findAll();
+        $format = new Format();
+        $actors = new Actor();
+        for ($i = 0; $i < count($films); $i++) {
+            $format->id = $films[$i]['format_id'];
+            $films[$i]['format_title'] = $format->getFormatById();
+            $films[$i]['actors'] = $actors->getJoinFilm($films[$i]['id']);
+        }
+        return $films;
+    }
 }

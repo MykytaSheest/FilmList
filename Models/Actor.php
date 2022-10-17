@@ -24,4 +24,24 @@ class Actor extends Model
         return $actor;
     }
 
+    public function getJoinFilm(int $idFilm)
+    {
+        $sql = 'SELECT * FROM actors 
+                    INNER JOIN film_actor ON film_actor.actor_id = actors.id
+                    WHERE film_actor.film_id = :id
+                    ';
+        $actors = $this->db->row(
+            $sql,
+            [
+                'id' => $idFilm
+            ],
+        );
+        $names = [];
+        foreach ($actors as $actor) {
+            $names[] = $actor['name'];
+        }
+
+        return $names;
+    }
+
 }

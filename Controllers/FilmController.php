@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\View;
 use lib\Codes;
 use lib\Messages;
+use Models\Film;
 use Models\Format;
 use Services\ActorService;
 use Services\FilmService;
@@ -26,7 +27,9 @@ class FilmController extends Controller
 
     public function index()
     {
-        $this->view->render('Films');
+        $film = new Film();
+        $films = $film->getFilms();
+        $this->view->render('Films', ['films' => $films]);
     }
 
     public function create()
