@@ -49,4 +49,13 @@ class FilmController extends Controller
                 View::error(Codes::HTTP_METHOD_NOT_ALLOWED, Messages::METHOD_NOT_ALLOWED);
         }
     }
+
+    public function delete()
+    {
+        $film = new Film();
+        $film->id = $_POST['id'];
+        $film->delete();
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode('ok');
+    }
 }

@@ -36,3 +36,66 @@ h1 {
     padding: 15px;
     height: 50em;
 }
+
+.film-table {
+    border: 1px solid;
+}
+
+.film-table td
+{
+    border: 1px solid;
+}
+
+.films {
+    width: 70%;
+    margin: 0 auto;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid purple;
+}
+
+thead th:nth-child(1) {
+    width: 30%;
+}
+
+thead th:nth-child(2) {
+    width: 20%;
+}
+
+thead th:nth-child(3) {
+    width: 15%;
+}
+
+thead th:nth-child(4) {
+    width: 35%;
+}
+
+th, td {
+    padding: 20px;
+}
+
+td button {
+    padding: 5px;
+}
+
+.add-film {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.film-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-block {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+

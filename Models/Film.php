@@ -48,7 +48,7 @@ class Film extends Model
 
     public function getFilms():array
     {
-        $films = $this->findAll();
+        $films = $this->orderByTitle();
         $format = new Format();
         $actors = new Actor();
         for ($i = 0; $i < count($films); $i++) {
@@ -57,5 +57,25 @@ class Film extends Model
             $films[$i]['actors'] = $actors->getJoinFilm($films[$i]['id']);
         }
         return $films;
+    }
+
+    public function orderByTitle()
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC';
+        return $this->db->row(
+            $sql
+        );
+    }
+
+    public function delete()
+    {
+        $sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE id = :id';
+        $result = $this->db->query(
+            $sql,
+            [
+                'id' => $this->getId(),
+            ],
+        );
+        return $result;
     }
 }

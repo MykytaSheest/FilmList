@@ -8,6 +8,10 @@ return [
         'controller' => 'film',
         'action' => 'create',
     ],
+    'film/delete' => [
+        'controller' => 'film',
+        'action' => 'delete',
+    ],
     'register' => [
         'controller' => 'auth',
         'action' => 'register',
