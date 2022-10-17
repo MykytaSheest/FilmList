@@ -18,7 +18,7 @@ class DB
         );
     }
 
-    public function query($sql, $params = [])
+    public function query($sql, $params = [], bool $getId = false)
     {
         $stmt = $this->db->prepare($sql);
         if (!empty($params)) {
@@ -27,6 +27,9 @@ class DB
             }
         }
         $stmt->execute();
+        if ($getId == true) {
+            return $this->db->lastInsertId();
+        }
         return $stmt;
     }
 

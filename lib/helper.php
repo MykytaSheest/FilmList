@@ -7,3 +7,9 @@ function dumper($data)
     echo "</pre>";
     exit;
 }
+
+
+function getHost()
+{
+    return 'http://localhost:8080';
+}
