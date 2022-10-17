@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="form">
-        <form action="login" class="login_form" method="post">
+        <form action="<?= getHost()?>/login" class="login_form" method="post">
             <div class="form-container">
                 <input type="email" class="email" id="email" name="email" placeholder="Your e-mail" required>
                 <input type="password" class="password" id="password" name="password" placeholder="Your password" required>

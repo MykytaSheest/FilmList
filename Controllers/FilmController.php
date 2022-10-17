@@ -66,4 +66,25 @@ class FilmController extends Controller
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode('ok');
     }
+
+    public function search()
+    {
+        if (!empty($_POST['title'])) {
+            $film = new Film();
+            $films = $film->getSearchFilm('%' . $_POST['title'] . '%', 'title');
+            $this->view->setPath('film/index');
+            $this->view->render('Search Fimls', ['films' => $films]);
+        } else if (!empty($_POST['actor'])) {
+            $film = new Film();
+
+            $films = $this->actorService->uniqueMultidimArray(
+                $film->getSearchFilm('%' . $_POST['actor'] . '%', 'actor'),
+                'id'
+            );
+            $this->view->setPath('film/index');
+            $this->view->render('Search Fimls', ['films' => $films]);
+        } else {
+            View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
+        }
+    }
 }

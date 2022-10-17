@@ -11,8 +11,6 @@ form.onsubmit = function (event) {
     event.preventDefault()
 }
 
-let button = ''
-
 addActorButton.onclick = function () {
     if (fieldActor.value !== '') {
         actors.push(fieldActor.value)

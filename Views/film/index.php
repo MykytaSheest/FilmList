@@ -2,26 +2,30 @@
 
 <div class="film-container">
     <div class="add-film">
-        <a href="film/create">
+        <a href="<?= getHost()?>/film/create">
             <button>Add film</button>
+        </a>
+    </div>
+    <div class="add-film">
+        <a href="<?= getHost()?>">
+            <button>Main page</button>
         </a>
     </div>
 
     <div class="films">
-
         <?php if (sizeof($films)): ?>
             <div class="search-block">
                 <div>
-                    <input type="text" placeholder="Search by title">
-                    <a href="">
-                        <input type="button" value="Search">
-                    </a>
+                    <form action="<?= getHost()?>/film/search" method="post">
+                        <input type="text" name="title" class="input-search-by-title" placeholder="Search by title">
+                        <input type="submit" class="button-search-by-title" value="Search">
+                    </form>
                 </div>
                 <div>
-                    <input type="text" placeholder="Search by actor">
-                    <a href="">
-                        <input type="button" value="Search">
-                    </a>
+                    <form action="<?= getHost()?>/film/search" method="post">
+                        <input type="text" name="actor" class="input-search-by-title" placeholder="Search by actor">
+                        <input type="submit" class="button-search-by-title" value="Search">
+                    </form>
                 </div>
             </div>
             <table class="film-table">

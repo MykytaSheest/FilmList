@@ -6,7 +6,6 @@ use Core\Model;
 
 class Film extends Model
 {
-
     protected function getTableName(): string
     {
         return "films";
@@ -15,6 +14,11 @@ class Film extends Model
     protected function getPivotTable(): string
     {
         return "film_actor";
+    }
+
+    protected function getActorTableName(): string
+    {
+        return 'actors';
     }
 
     public function create()
@@ -49,14 +53,21 @@ class Film extends Model
     public function getFilms():array
     {
         $films = $this->orderByTitle();
-        $format = new Format();
-        $actors = new Actor();
-        for ($i = 0; $i < count($films); $i++) {
-            $format->id = $films[$i]['format_id'];
-            $films[$i]['format_title'] = $format->getFormatById();
-            $films[$i]['actors'] = $actors->getJoinFilm($films[$i]['id']);
+        return $this->getFilmData($films);
+    }
+
+    public function getSearchFilm($findString, $field) {
+        switch ($field) {
+            case 'title':
+                $films = $this->searchByTitle($findString);
+                break;
+            case 'actor':
+                $films = $this->searchByActor($findString);
+                break;
+            default:
+                return [];
         }
-        return $films;
+        return $this->getFilmData($films);
     }
 
     public function orderByTitle()
@@ -65,5 +76,44 @@ class Film extends Model
         return $this->db->row(
             $sql
         );
+    }
+
+    public function searchByTitle(string $findString)
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE title LIKE :find ';
+        return $this->db->row(
+            $sql,
+            [
+                'find' => $findString
+            ]
+        );
+    }
+
+    public function searchByActor(string $findActor)
+    {
+        $sql = 'SELECT DISTINCT *
+                FROM film_actor
+                JOIN actors ON film_actor.actor_id = actors.id
+                JOIN films ON film_actor.film_id = films.id
+                WHERE name LIKE :find
+                ';
+        return $this->db->row(
+            $sql,
+            [
+                'find' => $findActor
+            ]
+        );
+    }
+
+    protected function getFilmData($films)
+    {
+        $format = new Format();
+        $actors = new Actor();
+        for ($i = 0; $i < count($films); $i++) {
+            $format->id = $films[$i]['format_id'];
+            $films[$i]['format_title'] = $format->getFormatById();
+            $films[$i]['actors'] = $actors->getJoinFilm($films[$i]['id']);
+        }
+        return $films;
     }
 }

@@ -13,12 +13,12 @@
 <body>
     <header>
         <div>
-            <h1>Film List</h1>
+            <h1>My Films</h1>
         </div>
     </header>
     <div class="logout">
         <?php if (!empty($_SESSION['token'])): ?>
-            <a href="logout">
+            <a href="<?= getHost() ?>/logout">
                 <button>Logout</button>
             </a>
         <?php endif; ?>

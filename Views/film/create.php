@@ -1,5 +1,5 @@
 <script src="../../public/js/add_film.js" defer></script>
-<form action="post/create" METHOD="post" class="form-add-film">
+<form action="<?= getHost()?>/post/create" METHOD="post" class="form-add-film">
     <input type="text" name="title" class="film-input title" placeholder="Film title..." required>
     <input type="number" name="year" class="film-input year" placeholder="Film year..." min="1870" required>
     <select name="format" class="format">
