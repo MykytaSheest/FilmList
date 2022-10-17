@@ -1,8 +1,12 @@
 <?php
 return [
     '' => [
-        'controller' => 'main',
+        'controller' => 'film',
         'action' => 'index',
+    ],
+    'film/create' => [
+        'controller' => 'film',
+        'action' => 'create',
     ],
     'register' => [
         'controller' => 'auth',
