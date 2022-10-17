@@ -16,7 +16,7 @@ class AuthService
         $this->user =  new User();
     }
 
-    public function createUser(string $email, string $password): mixed
+    public function createUser(string $email, string $password): ?User
     {
         if ($this->user->getUserBy('email', $email)) {
             return $this->user->getUserBy('email', $email);
@@ -27,7 +27,7 @@ class AuthService
         return $this->user;
     }
 
-    public function loginUser(string $email, string $password)
+    public function loginUser(string $email, string $password): ?User
     {
         $user = $this->user->getUserBy('email', $email);
         if (isset($user)) {
@@ -40,7 +40,7 @@ class AuthService
         return null;
     }
 
-    public function checkAuth()
+    public function checkAuth(): ?bool
     {
         if ($_SESSION) {
             $data = $this->user->getUserBy('id', $_SESSION['id']);

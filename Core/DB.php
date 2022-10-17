@@ -18,7 +18,7 @@ class DB
         );
     }
 
-    public function query($sql, $params = [], bool $getId = false)
+    public function query($sql, $params = [], bool $getId = false): \PDOStatement|string|bool
     {
         $stmt = $this->db->prepare($sql);
         if (!empty($params)) {
@@ -33,13 +33,13 @@ class DB
         return $stmt;
     }
 
-    public function row($sql, $params = [])
+    public function row($sql, $params = []): array|bool
     {
         $result = $this->query($sql, $params);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function column($sql, $params = [])
+    public function column($sql, $params = []): mixed
     {
         $result = $this->query($sql, $params);
         return $result->fetchColumn();

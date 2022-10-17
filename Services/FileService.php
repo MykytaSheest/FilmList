@@ -4,7 +4,7 @@ namespace Services;
 
 class FileService
 {
-    public function parseFile($data)
+    public function parseFile($data): array
     {
         $array = null;
         if ($data) {

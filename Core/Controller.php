@@ -26,7 +26,7 @@ abstract class Controller
         $this->view->setLayout('default');
     }
 
-    protected function existenceUser(string $page)
+    protected function existenceUser(string $page): void
     {
         $user = new User();
         if (empty($user->findAll())) {
@@ -34,7 +34,7 @@ abstract class Controller
         }
     }
 
-    protected function checkAuth()
+    protected function checkAuth(): void
     {
         if(!$this->authService->checkAuth()) {
             $this->view->redirect('login');

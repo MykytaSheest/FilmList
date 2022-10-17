@@ -23,7 +23,7 @@ class ActorService
         return $ids;
     }
 
-    public function deleteActorsById(array $ids)
+    public function deleteActorsById(array $ids): void
     {
         foreach ($ids as $id) {
             $this->actor->id = $id;
@@ -31,7 +31,8 @@ class ActorService
         }
     }
 
-    public function uniqueMultidimArray($array, $key) {
+    public function uniqueMultidimArray(array $array, string $key): array
+    {
         $temp_array = array();
         $i = 0;
         $key_array = array();

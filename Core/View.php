@@ -44,7 +44,7 @@ class View
         require self::PATH_TO_LAYOUTS . self::$errorLayout . '.php';
     }
 
-    public function redirect(string $url)
+    public function redirect(string $url): void
     {
         header('Location: ' . $url );
         exit;
