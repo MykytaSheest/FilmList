@@ -16,6 +16,11 @@
 
     <input type="submit" class="film-input save-form" value="Save">
 
+    <a href="<?= getHost() ?>/film/file">
+        Upload file with films
+    </a>
 </form>
+
+
 
 <?php

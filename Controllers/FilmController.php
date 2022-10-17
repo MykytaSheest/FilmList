@@ -10,12 +10,14 @@ use Models\Actor;
 use Models\Film;
 use Models\Format;
 use Services\ActorService;
+use Services\FileService;
 use Services\FilmService;
 
 class FilmController extends Controller
 {
     protected ActorService $actorService;
     protected FilmService $filmService;
+    protected FileService $fileService;
 
     public function __construct(array $route)
     {
@@ -24,6 +26,7 @@ class FilmController extends Controller
         $this->checkAuth();
         $this->actorService = new ActorService();
         $this->filmService = new FilmService();
+        $this->fileService = new FileService();
     }
 
     public function index()
@@ -85,6 +88,27 @@ class FilmController extends Controller
             $this->view->render('Search Fimls', ['films' => $films]);
         } else {
             View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
+        }
+    }
+
+    public function upload()
+    {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                $this->view->setPath('film/upload');
+                $this->view->render('Upload file with films');
+                break;
+            case 'POST':
+                $films = $this->fileService->parseFile(fopen($_FILES['file']['tmp_name'], 'r'));
+                foreach ($films as $film) {
+                    $actorIds = $this->actorService->addActors($film['actors']);
+                    $filmId = $this->filmService->createFilm($film);
+                    $this->filmService->createFilmAcotr($filmId, $actorIds);
+                }
+                $this->view->redirect('/');
+                break;
+            default:
+                View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
         }
     }
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../public/css/film/main.css">
     <link rel="stylesheet" href="../../public/css/user/auth.css">
     <link rel="stylesheet" href="../../public/css/film/form.css">
+    <link rel="stylesheet" href="../../public/css/film/upload.css">
 </head>
 <body>
     <header>
