@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\View;
 use lib\Codes;
 use lib\Messages;
+use Models\Actor;
 use Models\Film;
 use Models\Format;
 use Services\ActorService;
@@ -54,7 +55,14 @@ class FilmController extends Controller
     {
         $film = new Film();
         $film->id = $_POST['id'];
+
+        $actor = new Actor();
+
+        $actorIds = $actor->getJoinFilm($_POST['id'], true);
+        $this->actorService->deleteActorsById($actorIds);
+
         $film->delete();
+
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode('ok');
     }

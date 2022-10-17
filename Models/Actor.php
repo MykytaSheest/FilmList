@@ -24,7 +24,7 @@ class Actor extends Model
         return $actor;
     }
 
-    public function getJoinFilm(int $idFilm)
+    public function getJoinFilm(int $idFilm, bool $getIds = false)
     {
         $sql = 'SELECT * FROM actors 
                     INNER JOIN film_actor ON film_actor.actor_id = actors.id
@@ -36,12 +36,20 @@ class Actor extends Model
                 'id' => $idFilm
             ],
         );
+
         $names = [];
+        if ($getIds == true) {
+            $ids = [];
+            foreach ($actors as $actor) {
+                $ids[] = $actor['id'];
+            }
+            return $ids;
+        }
+
         foreach ($actors as $actor) {
             $names[] = $actor['name'];
         }
 
         return $names;
     }
-
 }

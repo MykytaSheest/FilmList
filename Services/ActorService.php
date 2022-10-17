@@ -22,4 +22,12 @@ class ActorService
         }
         return $ids;
     }
+
+    public function deleteActorsById(array $ids)
+    {
+        foreach ($ids as $id) {
+            $this->actor->id = $id;
+            $this->actor->delete();
+        }
+    }
 }
