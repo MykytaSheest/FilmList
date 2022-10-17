@@ -10,7 +10,6 @@ use Models\User;
 
 class AuthController extends Controller
 {
-
     public function __construct(array $route)
     {
         parent::__construct($route);
@@ -65,7 +64,7 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(): void
     {
         session_destroy();
         $this->view->redirect('/');

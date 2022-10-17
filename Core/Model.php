@@ -22,7 +22,7 @@ abstract class Model
         return $this->id;
     }
 
-    public function __set(string $name, $value)
+    public function __set(string $name, string $value)
     {
         $camelCaseName = $this->underscoreToCamelCase($name);
         $this->$camelCaseName = $value;
@@ -34,12 +34,12 @@ abstract class Model
     }
 
 
-    public function findAll()
+    public function findAll(): array|bool
     {
         return $this->db->row('SELECT * FROM ' . $this->getTableName() . ';');
     }
 
-    public function delete()
+    public function delete(): \PDOStatement|string|bool
     {
         $sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE id = :id';
         $result = $this->db->query(

@@ -13,7 +13,7 @@ class FilmService
         $this->film = new Film();
     }
 
-    public function createFilm($data): int
+    public function createFilm(array $data): int
     {
         $this->film->title = $data['title'];
         $this->film->year = $data['year'];
@@ -26,20 +26,5 @@ class FilmService
         foreach ($actorsId as $id) {
             $this->film->createPivot($filmId, $id);
         }
-    }
-
-    public function uniqueMultidimArray($array, $key) {
-        $temp_array = array();
-        $i = 0;
-        $key_array = array();
-
-        foreach($array as $val) {
-            if (!in_array($val[$key], $key_array)) {
-                $key_array[$i] = $val[$key];
-                $temp_array[$i] = $val;
-            }
-            $i++;
-        }
-        return $temp_array;
     }
 }

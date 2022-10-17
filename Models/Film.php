@@ -21,7 +21,7 @@ class Film extends Model
         return 'actors';
     }
 
-    public function create()
+    public function create(): \PDOStatement|string|bool
     {
         $sql = 'INSERT INTO ' . $this->getTableName() . ' (title, year, format_id) VALUES (:title, :year, :format_id)';
         $actor = $this->db->query(
@@ -37,7 +37,7 @@ class Film extends Model
 
     }
 
-    public function createPivot(int $filmId, int $actorId)
+    public function createPivot(int $filmId, int $actorId): \PDOStatement|string|bool
     {
         $sql = 'INSERT INTO ' . $this->getPivotTable() . ' (film_id, actor_id) VALUES (:film_id, :actor_id)';
         $pivot = $this->db->query(
@@ -50,13 +50,14 @@ class Film extends Model
         return $pivot;
     }
 
-    public function getFilms():array
+    public function getFilms(): array
     {
         $films = $this->orderByTitle();
         return $this->getFilmData($films);
     }
 
-    public function getSearchFilm($findString, $field) {
+    public function getSearchFilm(string $findString, string $field): array
+    {
         switch ($field) {
             case 'title':
                 $films = $this->searchByTitle($findString);
@@ -70,7 +71,7 @@ class Film extends Model
         return $this->getFilmData($films);
     }
 
-    public function orderByTitle()
+    public function orderByTitle(): array|bool
     {
         $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC';
         return $this->db->row(
@@ -78,7 +79,7 @@ class Film extends Model
         );
     }
 
-    public function searchByTitle(string $findString)
+    public function searchByTitle(string $findString): array|bool
     {
         $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE title LIKE :find ';
         return $this->db->row(
@@ -89,7 +90,7 @@ class Film extends Model
         );
     }
 
-    public function searchByActor(string $findActor)
+    public function searchByActor(string $findActor): array|bool
     {
         $sql = 'SELECT DISTINCT *
                 FROM film_actor
@@ -105,7 +106,7 @@ class Film extends Model
         );
     }
 
-    protected function getFilmData($films)
+    protected function getFilmData(array $films): array
     {
         $format = new Format();
         $actors = new Actor();

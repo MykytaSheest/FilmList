@@ -14,7 +14,7 @@ class User extends Model
         return 'users';
     }
 
-    public function create()
+    public function create(): \PDOStatement|string|bool
     {
         $sql = 'INSERT INTO ' . $this->getTableName() . ' (email, password) VALUES (:email, :password)';
         $user = $this->db->query(
@@ -27,7 +27,7 @@ class User extends Model
         return $user;
     }
 
-    public function getUserBy(string $row, string $val)
+    public function getUserBy(string $row, string $val): ?User
     {
         $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $row. ' = :'.$row;
         $data = $this->db->row($sql, [$row => $val]);

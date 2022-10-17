@@ -29,14 +29,14 @@ class FilmController extends Controller
         $this->fileService = new FileService();
     }
 
-    public function index()
+    public function index(): void
     {
         $film = new Film();
         $films = $film->getFilms();
         $this->view->render('Films', ['films' => $films]);
     }
 
-    public function create()
+    public function create(): void
     {
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
@@ -54,7 +54,7 @@ class FilmController extends Controller
         }
     }
 
-    public function delete()
+    public function delete(): void
     {
         $film = new Film();
         $film->id = $_POST['id'];
@@ -70,7 +70,7 @@ class FilmController extends Controller
         echo json_encode('ok');
     }
 
-    public function search()
+    public function search(): void
     {
         if (!empty($_POST['title'])) {
             $film = new Film();
@@ -91,7 +91,7 @@ class FilmController extends Controller
         }
     }
 
-    public function upload()
+    public function upload(): void
     {
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
