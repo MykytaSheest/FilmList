@@ -16,6 +16,10 @@ return [
         'controller' => 'film',
         'action' => 'search',
     ],
+    'film/file' => [
+        'controller' => 'film',
+        'action' => 'upload',
+    ],
     'register' => [
         'controller' => 'auth',
         'action' => 'register',
