@@ -58,7 +58,7 @@ class FilmController extends Controller
     {
         $film = new Film();
         $film->id = $_POST['id'];
-
+        $data = $film->getById($_POST['id']);
         $actor = new Actor();
 
         $actorIds = $actor->getJoinFilm($_POST['id'], true);
@@ -67,7 +67,7 @@ class FilmController extends Controller
         $film->delete();
 
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode('ok');
+        echo json_encode($data);
     }
 
     public function search(): void

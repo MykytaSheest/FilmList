@@ -12,7 +12,7 @@
     <div class="actors">
     </div>
     <div class="actor-input">
-        <input type="text" name="actor" class="film-input field-actor" placeholder="add actor...">
+        <input type="text" name="actor" class="film-input field-actor" pattern="[A-Za-z]" placeholder="add actor...">
         <input type="button" class="add-actor-button film-input" value="add">
     </div>
 
