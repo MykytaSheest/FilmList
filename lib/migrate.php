@@ -7,3 +7,5 @@ $db = new Core\DB();
 $query = file_get_contents('sql/create_tables.sql');
 
 $db->query($query);
+
+echo "Migration done!";

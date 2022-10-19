@@ -2,6 +2,10 @@
 
 namespace Services;
 
+use Core\View;
+use lib\Codes;
+use mysql_xdevapi\Exception;
+
 class FileService
 {
     public function parseFile($data): array
@@ -21,6 +25,15 @@ class FileService
             "DVD" => 2,
             "Blu-Ray" => 3
         ];
+        if (empty($array)) {
+            http_response_code(Codes::HTTP_BAD_REQUEST);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'code' => Codes::HTTP_BAD_REQUEST,
+                'message' => 'Incorrect file format or empty file'
+            ]);
+            exit;
+        }
         for ($i = 0; $i < count($array); $i++) {
             if ($array[$i] != "\n") {
                 $current = explode(':', trim($array[$i]));

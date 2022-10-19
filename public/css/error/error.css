@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.error_handler {
+    padding-top: 22em;
+    padding-bottom: 22em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.code {
+    font-size: 25px;
+}
+
+.message {
+    font-size: 20px;
+}

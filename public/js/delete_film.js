@@ -6,6 +6,10 @@ for (let i = 0; i < buttons.length; i++) {
 
 
 function deleteFilm() {
+    let result = confirm('Do you want to delete the movie?');
+    if (result === false) {
+        return;
+    }
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -23,7 +27,7 @@ function deleteFilm() {
         .then(response => response.text())
         .then(result => {
             let data = JSON.parse(result)
-            console.log(data)
+            alert('Film ' + '"' + data[0]['title'].trim() + '"' + ' was deleted!')
             window.location.href = '/';
         })
         .catch(error => {

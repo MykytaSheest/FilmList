@@ -34,12 +34,40 @@ class Film extends Model
             true,
         );
         return $actor;
+    }
 
+    public function update(): bool|string|\PDOStatement
+    {
+        $sql = 'UPDATE ' . $this->getTableName() . ' SET title = :title, year = :year, format_id = :format_id WHERE id = :id';
+        $actor = $this->db->query(
+            $sql,
+            [
+                'id' => $this->id,
+                'title' => $this->title,
+                'year' => $this->year,
+                'format_id' => $this->formatId,
+            ],
+            true,
+        );
+        return $actor;
     }
 
     public function createPivot(int $filmId, int $actorId): \PDOStatement|string|bool
     {
         $sql = 'INSERT INTO ' . $this->getPivotTable() . ' (film_id, actor_id) VALUES (:film_id, :actor_id)';
+        $pivot = $this->db->query(
+            $sql,
+            [
+                'film_id' => $filmId,
+                'actor_id' => $actorId,
+            ],
+        );
+        return $pivot;
+    }
+
+    public function updatePivot(int $filmId, int $actorId): bool|string|\PDOStatement
+    {
+        $sql = 'UPDATE ' . $this->getPivotTable() . ' SET actor_id = :actor_id WHERE film_id = :film_id)';
         $pivot = $this->db->query(
             $sql,
             [
@@ -73,7 +101,7 @@ class Film extends Model
 
     public function orderByTitle(): array|bool
     {
-        $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC';
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title COLLATE  utf8_unicode_ci';
         return $this->db->row(
             $sql
         );

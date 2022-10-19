@@ -38,11 +38,11 @@
                 </tr>
                 <?php foreach ($films as $film): ?>
                     <tr>
-                        <td><p><?= $film['id'] ?></p></td>
-                        <td><p><?= $film['title'] ?></p></td>
-                        <td><?= $film['year'] ?></td>
-                        <td><?= $film['format_title'] ?></td>
-                        <td><?= implode(', ', $film['actors']) ?></td>
+                        <td><p><?= htmlspecialchars($film['id']) ?></p></td>
+                        <td><p><?= htmlspecialchars($film['title']) ?></p></td>
+                        <td><?= htmlspecialchars($film['year']) ?></td>
+                        <td><?= htmlspecialchars($film['format_title']) ?></td>
+                        <td><?= htmlspecialchars(implode(', ', $film['actors'])) ?></td>
                         <td>
                             <button class="delete-button" value="<?= $film['id'] ?>">Delete</button>
                         </td>
