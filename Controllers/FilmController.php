@@ -43,11 +43,20 @@ class FilmController extends Controller
                 $this->view->render('Add Film', ['formats' => new Format()]);
                 break;
             case 'POST':
+                $film = new Film();
+                if (!empty($film->getBy('title', $_POST['title']))) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode([
+                        'code' => Codes::HTTP_BAD_REQUEST,
+                        'message' => 'Film exist'
+                    ]);
+                    exit;
+                }
                 $actorIds = $this->actorService->addActors(explode(',', $_POST['actors']));
                 $filmId = $this->filmService->createFilm($_POST);
                 $this->filmService->createFilmAcotr($filmId, $actorIds);
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($filmId);
+                echo json_encode(['title' => $_POST['title']]);
                 break;
             default:
                 View::error(Codes::HTTP_METHOD_NOT_ALLOWED, Messages::METHOD_NOT_ALLOWED);
@@ -58,7 +67,7 @@ class FilmController extends Controller
     {
         $film = new Film();
         $film->id = $_POST['id'];
-
+        $data = $film->getById($_POST['id']);
         $actor = new Actor();
 
         $actorIds = $actor->getJoinFilm($_POST['id'], true);
@@ -67,7 +76,7 @@ class FilmController extends Controller
         $film->delete();
 
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode('ok');
+        echo json_encode($data);
     }
 
     public function search(): void
@@ -100,12 +109,28 @@ class FilmController extends Controller
                 break;
             case 'POST':
                 $films = $this->fileService->parseFile(fopen($_FILES['file']['tmp_name'], 'r'));
-                foreach ($films as $film) {
+                $allFilms = $this->filmService->checkExistMoviesAndThrowExists($films);
+                foreach ($allFilms['add'] as $film) {
                     $actorIds = $this->actorService->addActors($film['actors']);
                     $filmId = $this->filmService->createFilm($film);
                     $this->filmService->createFilmAcotr($filmId, $actorIds);
                 }
-                $this->view->redirect('/');
+                foreach ($allFilms['update'] as $film) {
+                    $actorIds = $this->actorService->addActors($film['actors']);
+                    $actor = new Actor();
+
+                    $oldActorIds = $actor->getJoinFilm($film['id'], true);
+                    $this->actorService->deleteActorsById($oldActorIds);
+
+                    $this->filmService->updateFilm($film);
+                    $this->filmService->createFilmAcotr($film['id'], $actorIds);
+                }
+
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode([
+                    'added' => count($allFilms['add']),
+                    'updated' => count($allFilms['update'])
+                ]);
                 break;
             default:
                 View::error(Codes::HTTP_NOT_FOUND, Messages::VIEW_NOT_FOUND);
