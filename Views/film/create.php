@@ -3,9 +3,9 @@
     <input type="text" name="title" class="film-input title" placeholder="Film title..." required>
     <input type="number" name="year" class="film-input year" placeholder="Film year..." min="1870" required>
     <select name="format" class="format">
-        <?php foreach ($formats->findAll() as $format): ?>
-            <option value="<?= $format['id']?>"><?= $format['title']?></option>
-        <?php endforeach; ?>
+        <option value="1">VHS</option>
+        <option value="2">DVD</option>
+        <option value="3">Blu-ray</option>
     </select>
     <div class="actors">
     </div>
