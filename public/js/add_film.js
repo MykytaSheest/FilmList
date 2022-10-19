@@ -57,8 +57,12 @@ function sendData(data) {
         .then(response => response.text())
         .then(result => {
             let data = JSON.parse(result)
-            console.log(data)
-            window.location.href = '/';
+            if (data.code === 400) {
+                alert(data.message)
+            } else {
+                alert(data.title + ' added')
+                window.location.href = '/';
+            }
         })
         .catch(error => {
             alert('Wrong data, please try again')

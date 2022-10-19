@@ -43,11 +43,20 @@ class FilmController extends Controller
                 $this->view->render('Add Film', ['formats' => new Format()]);
                 break;
             case 'POST':
+                $film = new Film();
+                if (!empty($film->getBy('title', $_POST['title']))) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo json_encode([
+                        'code' => Codes::HTTP_BAD_REQUEST,
+                        'message' => 'Film exist'
+                    ]);
+                    exit;
+                }
                 $actorIds = $this->actorService->addActors(explode(',', $_POST['actors']));
                 $filmId = $this->filmService->createFilm($_POST);
                 $this->filmService->createFilmAcotr($filmId, $actorIds);
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($filmId);
+                echo json_encode(['title' => $_POST['title']]);
                 break;
             default:
                 View::error(Codes::HTTP_METHOD_NOT_ALLOWED, Messages::METHOD_NOT_ALLOWED);
