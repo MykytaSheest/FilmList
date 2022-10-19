@@ -73,7 +73,7 @@ class Film extends Model
 
     public function orderByTitle(): array|bool
     {
-        $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title ASC';
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' ORDER BY title COLLATE  utf8_unicode_ci';
         return $this->db->row(
             $sql
         );
