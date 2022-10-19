@@ -36,7 +36,7 @@ function removeSpace(input) {
 
 function removeNumber(input, event){
     if (
-        (event.keyCode >= 32 && event.keyCode <= 43) ||
+        (event.keyCode >= 33 && event.keyCode <= 43) ||
         (event.keyCode >= 46 && event.keyCode <= 64) ||
         (event.keyCode >= 91 && event.keyCode <= 96) ||
         (event.keyCode >= 123 && event.keyCode <= 127) ||

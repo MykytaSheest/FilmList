@@ -62,5 +62,16 @@ abstract class Model
         );
     }
 
+    public function getBy($field, $value)
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $field . ' = :' . $field;
+        return $this->db->row(
+            $sql,
+            [
+                $field => $value
+            ]
+        );
+    }
+
     abstract protected function getTableName(): string;
 }
