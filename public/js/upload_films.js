@@ -12,7 +12,6 @@ saveButton.onclick = function () {
     let file = document.querySelector('.file-input').files[0]
     const formData = new FormData();
     formData.append('file', file);
-    console.log(file)
     fetch('http://localhost:8080/film/file', {
         method: 'POST',
         body: formData
@@ -20,8 +19,12 @@ saveButton.onclick = function () {
         .then(response => response.text())
         .then(result => {
             let data = JSON.parse(result)
-            alert('Adder films: ' + data.added + "\n" + 'Updated films: ' + data.updated)
-            window.location.href = '/';
+            if (data.code === 400) {
+                alert(data.message)
+            } else {
+                alert('Adder films: ' + data.added + "\n" + 'Updated films: ' + data.updated)
+                window.location.href = '/';
+            }
         })
         .catch(() => { console.log('Ошибка');})
 }

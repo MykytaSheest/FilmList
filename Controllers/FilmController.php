@@ -115,9 +115,8 @@ class FilmController extends Controller
 
                     $this->filmService->updateFilm($film);
                     $this->filmService->createFilmAcotr($film['id'], $actorIds);
-
                 }
-                
+
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode([
                     'added' => count($allFilms['add']),

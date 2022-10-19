@@ -26,7 +26,12 @@ class FileService
             "Blu-Ray" => 3
         ];
         if (empty($array)) {
-            View::error(Codes::HTTP_BAD_REQUEST, 'Incorrect file format or empty file');
+            http_response_code(Codes::HTTP_BAD_REQUEST);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'code' => Codes::HTTP_BAD_REQUEST,
+                'message' => 'Incorrect file format or empty file'
+            ]);
             exit;
         }
         for ($i = 0; $i < count($array); $i++) {
